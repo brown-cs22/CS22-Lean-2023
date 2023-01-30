@@ -1,4 +1,6 @@
-# Directions for setting up GitPod
+# Brown CS22 Spring 2023: Lean project
+
+## Directions for setting up GitPod
 
 Before following these directions,
 you will need to sign up for a [GitHub account](https://github.com/)
@@ -42,6 +44,20 @@ The link above will create a new workspace each time you click it.
 If at any point your workspace becomes unusable
 and you think you need a fresh start,
 you can click on the original link to get a new copy of the course workspace.
+
+## Directions for updating 
+
+We will push more lecture demos and homework assignments to this project throughout the semester.
+To pull them into your Gitpod instance, follow these directions:
+
+* Open the terminal in Gitpod, if it is not already open. 
+* Run the command `scripts/pull-updates`.
+
+We will try not to let this happen, but occasionally, we might change files that you have edited yourself.
+The `pull-updates` script should notice this and not overwrite your changes.
+But if there are conflicts, you may have to reset your work.
+(Feel free to copy your changes to another file if you want.)
+Running the command `scripts/reset-all` and then `pull-updates` again should clean things up.
 
 ## git: the fine print 
 
