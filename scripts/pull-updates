@@ -7,15 +7,24 @@ else
   git pull 
   if ! git stash apply stash^{/push-update}
   then
+  
+    # Reset index and working tree to their original state (before stash)
     git reset --hard $HC
+
+    # Apply the stash entry reachable from the most recent stash, matching the string "push-update". This is maybe
+    # a lil convoluted?
     git stash apply stash^{/push-update}
+
+    # Given that this drops the most recent stash entry, not sure the attached messages are strictly necessary
     git stash drop
+
     echo ""
     echo "We cannot get the latest changes to the class materials, because you have local changes that conflict with them."
     echo "The conflicting files should be visible in the trace message above, after the word CONFLICT."
     echo "To erase your local changes, run the command `reset-all`."
     echo "(Warning: this cannot be undone.)"
     echo "Remember that you should only be modifying files in your personal working directories."
+
   else 
     git stash drop
     lake exe cache get
