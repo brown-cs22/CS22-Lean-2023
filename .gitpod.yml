@@ -6,7 +6,8 @@ vscode:
     - leanprover.lean4
 
 tasks:
+  # These commands get entered because of clip-style chomping in the YAML processor
   - init: |
       lake exe cache get
     command: |
-      PATH="$PATH:/workspace/leanclass/scripts"
+      PATH="$PATH:/workspace/CS22-Lean-2023/scripts"
