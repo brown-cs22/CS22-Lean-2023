@@ -14,4 +14,5 @@ tasks:
     command: |
 
       # Append to .bashrc so that every new shell can find our source control scripts in the path
-      echo -e "export PATH=${PATH}:/workspace/CS22-Lean-2023/scripts" >> ${HOME}/.bashrc
+      # then exit this shell so the gitpod scripting will open a new shell, with the right path loaded
+      echo -e "export PATH=${PATH}:/workspace/CS22-Lean-2023/scripts" >> ${HOME}/.bashrc && exit
