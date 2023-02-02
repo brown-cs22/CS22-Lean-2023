@@ -9,8 +9,7 @@ if ! [[ $(git stash push -u) == *"No local changes to save"* ]]; then
     STASHED=
 fi
 
-# If automatic merge of upstream commits fails (most likely due to student modification of class files)
-if ! git pull --no-rebase ; then
+function handle_merge_conflict () {
 
     # Reset index and working tree to their original state (before stash)
     git reset --hard $HC
@@ -19,17 +18,22 @@ if ! git pull --no-rebase ; then
         git stash pop
     fi
 
-    echo ""
+    echo 
     echo "We cannot get the latest changes to the class materials, because you have local changes that conflict with them."
     echo "The conflicting files should be visible in the trace message above, after the word CONFLICT."
     echo "To erase your local changes, run the command `reset-all`."
     echo "(Warning: this cannot be undone.)"
     echo "Remember that you should only be modifying files in your personal working directories."
     exit 1
+}
+
+# If automatic merge of upstream commits fails (most likely due to student modification of class files)
+if ! git pull --no-rebase; then
+    handle_merge_conflict
+fi
+
+if [[ -v STASHED ]] && { ! git stash pop }; then
+    handle_merge_conflict
 fi
 
 lake exe cache get
-
-if [[ -v STASHED ]]; then
-    git stash pop
-fi
