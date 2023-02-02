@@ -1,9 +1,3 @@
-test change
-
-middle change
-
-test change 2
-
 
 # Brown CS22 Spring 2023: Lean project
 
