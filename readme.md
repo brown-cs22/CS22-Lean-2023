@@ -1,6 +1,3 @@
-some stuff from upstream
-
-more stuff from upstream, whagonnahappen
 
 # Brown CS22 Spring 2023: Lean project
 
