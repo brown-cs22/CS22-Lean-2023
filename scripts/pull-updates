@@ -32,7 +32,7 @@ if ! git pull --no-rebase; then
     handle_merge_conflict
 fi
 
-if [[ -v STASHED ]] && { ! git stash pop }; then
+if [[ -v STASHED ]] && ! git stash pop; then
     handle_merge_conflict
 fi
 
