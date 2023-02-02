@@ -14,7 +14,7 @@ elab (name := split_goal) "split_goal " : tactic => withMainContext do
 
 open private getElimNameInfo in evalCases in
 elab (name := eliminate) "eliminate " tgts:(casesTarget,+) usingArg:((" using " ident)?)
-  withArg:((" with " (colGt binderIdent)+)?) : tactic => do
+  withArg:((" with " (colGt binderIdent)+)?) : tactic => focus do
   let targets ← elabCasesTargets tgts.1.getSepArgs
   let g ← getMainGoal
   g.withContext do
