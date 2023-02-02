@@ -11,11 +11,10 @@ tasks:
   - init: |
       lake exe cache get
 
-    command: |
-
       # Append to .bashrc so that every new shell can find our source control scripts in the path
       # Ask user to close window so that path modification can take effect in new shell
       echo "export PATH=${PATH}:/workspace/CS22-Lean-2023/scripts" >> ${HOME}/.bashrc
       echo "Please close this terminal!"
       echo "A new one can be created in the `Terminal` submenu accessible under the settings bar in the top left,"
       echo "or by pressing Ctrl-Shift-`"
+
