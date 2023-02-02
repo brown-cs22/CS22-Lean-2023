@@ -27,13 +27,16 @@ function handle_merge_conflict () {
     exit 1
 }
 
-# If automatic merge of upstream commits fails (most likely due to student modification of class files)
+# See if automatic merge of upstream commits fails
+# Since we stashed, failure means the student is using git on their own and committed changes to class files
 if ! git pull --no-rebase; then
     handle_merge_conflict
 fi
 
+# Pull was successful, attempt to pop from stash if necessary
 if [[ -v STASHED ]] && ! git stash pop; then
     handle_merge_conflict
 fi
 
+# lean magic (I don't get this tbh)
 lake exe cache get
