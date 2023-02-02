@@ -12,16 +12,16 @@ fi
 function handle_merge_conflict () {
 
     # Reset index and working tree to their original state (before stash)
-    git reset --hard $HC
+    git reset --hard $HC >/dev/null
 
     if [[ -v STASHED ]] ; then
-        git stash pop
+        git stash pop >/dev/null
     fi
 
     echo 
     echo "We cannot get the latest changes to the class materials, because you have local changes that conflict with them."
     echo "The conflicting files should be visible in the trace message above, after the word CONFLICT."
-    echo "To erase your local changes, run the command `reset-all`."
+    echo 'To erase your local changes, run the command `reset-all`.'  # uses single quotes to avoid backtick tomfoolery
     echo "(Warning: this cannot be undone.)"
     echo "Remember that you should only be modifying files in your personal working directories."
     exit 1
