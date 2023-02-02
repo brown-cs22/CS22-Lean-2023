@@ -1,5 +1,4 @@
 echo "Executing this script will erase any changes you have made to official course files."
-echo "This includes ERASING ALL HOMEWORK SOLUTIONS YOU HAVE WRITTEN IN COURSE FILES."
 echo "It will not erase any files that you have created yourself."
 read -p "Are you sure you wish to continue? (y/n) " -n 1 -r
 echo 

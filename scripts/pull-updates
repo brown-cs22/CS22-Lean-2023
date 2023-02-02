@@ -1,22 +1,23 @@
+# Stores id of HEAD commit
 HC=$(git rev-parse HEAD)
-if [[ $(git stash push -m "push-update" -u) == *"No local changes to save"* ]]
-then 
-  git pull 
-  lake exe cache get
-else 
-  git pull 
-  if ! git stash apply stash^{/push-update}
-  then
-  
+
+# Just in case user has env variable with this name, very unlikely
+unset -v STASHED
+
+# Stash changes - branch executes iff output did not contain "No local...", i.e. iff a stash was actually made
+if ! [[ $(git stash push -u) == *"No local changes to save"* ]]; then
+    STASHED=
+fi
+
+# If automatic merge of upstream commits fails (most likely due to student modification of class files)
+if ! git pull --no-rebase ; then
+
     # Reset index and working tree to their original state (before stash)
     git reset --hard $HC
 
-    # Apply the stash entry reachable from the most recent stash, matching the string "push-update". This is maybe
-    # a lil convoluted?
-    git stash apply stash^{/push-update}
-
-    # Given that this drops the most recent stash entry, not sure the attached messages are strictly necessary
-    git stash drop
+    if [[ -v STASHED ]] ; then
+        git stash pop
+    fi
 
     echo ""
     echo "We cannot get the latest changes to the class materials, because you have local changes that conflict with them."
@@ -24,9 +25,11 @@ else
     echo "To erase your local changes, run the command `reset-all`."
     echo "(Warning: this cannot be undone.)"
     echo "Remember that you should only be modifying files in your personal working directories."
+    exit 1
+fi
 
-  else 
-    git stash drop
-    lake exe cache get
-  fi
+lake exe cache get
+
+if [[ -v STASHED ]]; then
+    git stash pop
 fi
