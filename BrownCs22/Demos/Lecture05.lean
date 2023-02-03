@@ -60,9 +60,3 @@ example : ¬ (p ∧ ¬ p) := by
   intro hpnp 
   eliminate hpnp with hp hnp 
   contradiction 
-
-
-(P ∧ Q ∧ R) ∨ (¬ P ∧ ¬ Q ∧ R)
-(P ∧ Q) ∨ (¬ P ∧ Q) ∨ (P ∧ ¬ Q) ∨ (¬ P ∧ ¬ Q)
-(P ∧ Q) ∨ (¬ P ∧ Q) ∨ (P ∧ ¬ Q)
-(P ∨ Q) ∨ (¬ P ∧ Q)
