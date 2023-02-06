@@ -99,3 +99,32 @@ The new tactics (proof rules) we saw:
   will prove any goal.
 
 -/
+
+
+/-
+
+## Lecture 6
+
+Some more new tactics, or new behavior for old tactics:
+
+* `intro t`: turn a goal of `∀ x : T, P x` into a goal of `P t`,
+  with a new term `t : T` in the context. 
+
+* `have h : P t := hP t`: if `hP : ∀ x : T, P x` and `t : T`,
+  creates a new hypothesis `h : P t`. 
+  Read this as "I know every `T` has property `P`, and `t` is a `T`, 
+  so `t` must have property `P`.
+
+* `existsi t`: turns a goal of `∃ x : T, G x` into a goal of `G t`.
+  This is the tactic we use to provide a witness.
+
+* `eliminate h with t ht`: when a hypothesis `h :  ∃ x : T, H x`, 
+  replaces `h` with a new witness `t` and the hypothesis `ht : H t`.
+  You should always use a fresh name for `t`.
+
+* `reflexivity`: proves equality goals where the LHS and RHS are the same,
+  like `x = x` and `f y = f y`. 
+
+* `numbers`: proves basic goals about numerals, like `10 < 1000` or 
+  `40 = 4*10`. Does not know about variables, so it won't prove `x = x`.
+-/

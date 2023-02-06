@@ -2,8 +2,11 @@ import Lean.Elab
 import Mathlib.Tactic.LeftRight
 import Mathlib.Tactic.Cases
 import Mathlib.Tactic.ApplyFun
+import Mathlib.Tactic.Existsi
+import Mathlib.Tactic.NormNum
 
-open Lean Meta Elab Tactic Lean.Parser.Tactic
+open Lean hiding Rat mkRat
+open Meta Elab Tactic Lean.Parser.Tactic
 
 elab (name := split_goal) "split_goal " : tactic => withMainContext do 
   let tgt := (← instantiateMVars (← whnfR (← getMainTarget)))
@@ -32,3 +35,20 @@ elab (name := eliminate) "eliminate " tgts:(casesTarget,+) usingArg:((" using " 
       let subgoals ← ElimApp.evalNames elimInfo result.alts withArg
          (numEqs := targets.size) (toClear := targetsNew)
       setGoals subgoals.toList
+
+macro "reflexivity" : tactic => `(tactic |rfl)
+
+section 
+
+open Lean.Meta Qq Lean.Elab Term
+open Lean.Parser.Tactic Mathlib.Meta.NormNum
+
+/--
+Normalize numerical expressions. Supports the operations `+` `-` `*` `/` `⁻¹` and `^`
+over numerical types such as `ℕ`, `ℤ`, `ℚ`, `ℝ`, `ℂ` and some general algebraic types,
+and can prove goals of the form `A = B`, `A ≠ B`, `A < B` and `A ≤ B`, where `A` and `B` are
+numerical expressions.
+-/
+elab (name := numbers) "numbers" loc:(location ?) : tactic =>
+  elabNormNum mkNullNode loc (simpOnly := true) (useSimp := false)
+end 
