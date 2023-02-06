@@ -10,6 +10,7 @@ inductive BExpr
 | or : BExpr → BExpr → BExpr
 | implies : BExpr → BExpr → BExpr
 | not : BExpr → BExpr
+| iff : BExpr → BExpr → BExpr
 deriving Repr, DecidableEq, Inhabited
 
 instance : ToString BExpr :=
@@ -21,11 +22,12 @@ let rec toString
 | .or p q => "(" ++ toString p ++ " ∨ " ++ toString q ++ ")"
 | .implies p q => "(" ++ toString p ++ " → " ++ toString q ++ ")"
 | .not p => "¬" ++ toString p
+| .iff p q => "(" ++ toString p ++ " ↔ " ++ toString q ++ ")"
 ⟨toString⟩
 
 def getVars : BExpr → List String
 | .var x => [x]
-| .and p q | .or p q | .implies p q => getVars p ++ getVars q
+| .and p q | .or p q | .implies p q | .iff p q => getVars p ++ getVars q
 | .not p => getVars p
 | .const _ => []
 
@@ -34,6 +36,7 @@ def subst : BExpr → String → Bool → BExpr
 | .and p q, s, b => .and (subst p s b) (subst q s b)
 | .or p q, s, b => .or (subst p s b) (subst q s b)
 | .implies p q, s, b => .implies (subst p s b) (subst q s b)
+| .iff p q, s, b => .iff (subst p s b) (subst q s b)
 | .not p, s, b => .not (subst p s b)
 | .const v, _, _ => .const v
 
@@ -47,11 +50,12 @@ def eval : BExpr → Option Bool
 | .implies p q => do (not (← eval p)) || (← eval q)
 | .not p => do not (← eval p)
 | .var _ => none
+| .iff p q => do (← eval p) == (← eval q)
 
 def generateSubExprs : BExpr → List BExpr
 | .const _ => [] -- we don't need to examine truth vals of ⊤/⊥
 | .var x => [.var x]
-| e@(.or p q) | e@(.and p q) | e@(.implies p q) =>
+| e@(.or p q) | e@(.and p q) | e@(.implies p q) | e@(.iff p q) =>
   generateSubExprs p ++ generateSubExprs q ++ [e]
 | .not p => generateSubExprs p ++ [.not p]
 
@@ -85,7 +89,7 @@ def truthTable (e : BExpr) : List (List (String × Bool)) :=
   let vars := getVars e
   let (BVars, VExps) := prefixVars ((generateSubExprs e).unique)
   let subBExprs := BVars.append VExps
-  let allAsgns := permuteVarVals vars
+  let allAsgns := permuteVarVals vars.unique
   allAsgns.map (λ asgns =>
     subBExprs
     |> List.map (λ e => (toString e, e))
@@ -133,6 +137,7 @@ partial def bExprOfPropTerm :
 | `($P ∧ $Q) => do `(.and ($(← bExprOfPropTerm P)) ($(← bExprOfPropTerm Q)))
 | `($P ∨ $Q) => do `(.or ($(← bExprOfPropTerm P)) ($(← bExprOfPropTerm Q)))
 | `($P → $Q) => do `(.implies ($(← bExprOfPropTerm P)) ($(← bExprOfPropTerm Q)))
+| `($P ↔ $Q) => do `(.iff ($(← bExprOfPropTerm P)) ($(← bExprOfPropTerm Q)))
 | `(¬ $P) => do `(.not ($(← bExprOfPropTerm P)))
 | `(True) => do `(.const true)
 | `(False) => do `(.const false)
