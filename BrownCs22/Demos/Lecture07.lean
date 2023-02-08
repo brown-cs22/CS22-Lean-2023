@@ -3,9 +3,6 @@ import BrownCs22.Library.Defs
 
 /-
 
-(Note: we'll actually cover this in lecture 7, so it's duplicated 
-in `Lecture07.lean`.)
-
 # First order logic in Lean
 
 We were a little vague in class about what function symbols, predicate symbols,
