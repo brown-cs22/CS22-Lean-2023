@@ -125,6 +125,27 @@ Some more new tactics, or new behavior for old tactics:
 * `reflexivity`: proves equality goals where the LHS and RHS are the same,
   like `x = x` and `f y = f y`. 
 
-* `numbers`: proves basic goals about numerals, like `10 < 1000` or 
-  `40 = 4*10`. Does not know about variables, so it won't prove `x = x`.
+-/
+
+
+/-
+
+## Homework 2
+
+* `positivity`: if your goal is to show something is positive or nonnegative 
+  (like `0 < x`, `x ≥ 0`, `0 ≤ a^2`, ...) and this "obviously" follows from
+  your hypotheses, write `positivity` to finish that goal. This tactic knows
+  basic facts like "natural numbers are nonnegative" and "the square of a 
+  positive number is positive." It does not know complicated arithmetic.
+
+* `numbers`: If your goal is to show an arithmetic statement about numerals,
+  like `5 + 5 = 10` or `1000 < 50000000`, `numbers` will close the goal.
+  It's basically a calculator!
+
+* `linarith`: stands for "linear arithmetic." (If you don't know this term,
+  don't worry.) `linarith` does similar things to `positivity` and `numbers`,
+  but it can do some simple arithmetic, and use hypotheses.
+  For instance, if you know `h1 : x < 10` and `h2 : x + y < 20`, `linarith`
+  can prove the goal `3*x + 2*y < 50`.
+
 -/

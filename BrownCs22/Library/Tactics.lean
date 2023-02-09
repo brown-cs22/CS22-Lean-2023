@@ -4,6 +4,8 @@ import Mathlib.Tactic.Cases
 import Mathlib.Tactic.ApplyFun
 import Mathlib.Tactic.Existsi
 import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Linarith
 
 open Lean hiding Rat mkRat
 open Meta Elab Tactic Lean.Parser.Tactic
