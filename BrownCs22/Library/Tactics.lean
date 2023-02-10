@@ -54,3 +54,5 @@ numerical expressions.
 elab (name := numbers) "numbers" loc:(location ?) : tactic =>
   elabNormNum mkNullNode loc (simpOnly := true) (useSimp := false)
 end 
+
+macro "set_simplify" : tactic => `(tactic | simp only [Set.mem_union, Set.mem_compl_iff, Set.mem_inter_iff, Set.mem_diff] at *)
