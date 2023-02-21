@@ -12,7 +12,7 @@ For example, I'm [robertylewis](https://github.com/robertylewis).
 There are scattered reports that this might not work on some versions of Safari. 
 If you run into trouble, try it in Chrome or Firefox before reporting to us.
 
-* Click on [this link](https://gitpod.io/#https://github.com/brown-cs22/CS22-Lean-2023).
+* Click on [this link](https://gitpod.io/#https://github.com/sidprasad/CS22-Lean-2023).
   * This will send you to Gitpod.
     Log in with your GitHub account.
   * If you are given a choice to open in your browser or locally,
