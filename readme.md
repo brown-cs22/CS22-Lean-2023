@@ -45,6 +45,14 @@ If at any point your workspace becomes unusable
 and you think you need a fresh start,
 you can click on the original link to get a new copy of the course workspace.
 
+## Directions for Setting up Logging
+
+
+1. Click on Extensions (or Ctrl + Shift + X) in your GitPod VSCode setup.
+2. Click the elipses and select `Install from VSIX`.
+3. Enter the following path and hit Ok : `/workspace/CS22-Lean-2023/save-to-firestore-0.13.1.vsix`
+
+
 ## Directions for updating 
 
 We will push more lecture demos and homework assignments to this project throughout the semester.
