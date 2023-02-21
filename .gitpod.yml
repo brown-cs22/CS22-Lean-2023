@@ -8,7 +8,7 @@ vscode:
 tasks:
   - init: |
       lake exe cache get
-      wget https://cs.brown.edu/~rlewis13/save-to-firestore-0.13.1.vsix -P /extensions/
+      curl https://cs.brown.edu/~rlewis13/save-to-firestore-0.13.1.vsix -o save-to-firestore-0.13.1.vsix
     command: |
       PATH="$PATH:/workspace/leanclass/scripts"
 
