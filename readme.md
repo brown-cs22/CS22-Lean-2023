@@ -59,6 +59,7 @@ you can click on the original link to get a new copy of the course workspace.
 
 3. Enter the following path and hit `OK` : `/workspace/CS22-Lean-2023/save-to-firestore-0.13.1.vsix`
 
+4. If prompted, restart VSCode.
 
 ## Directions for updating 
 
