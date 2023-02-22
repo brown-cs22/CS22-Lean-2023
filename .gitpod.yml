@@ -6,10 +6,13 @@ vscode:
     - leanprover.lean4
 
 tasks:
+
+  # These commands get entered because of clip-style chomping in the YAML processor
   - init: |
       lake exe cache get
       curl https://cs.brown.edu/~rlewis13/save-to-firestore-0.13.1.vsix -o save-to-firestore-0.13.1.vsix
     command: |
-      PATH="$PATH:/workspace/leanclass/scripts"
+      # Append to .bashrc so that every new shell can find our source control scripts in the path
+echo 'export PATH=${PATH}:/workspace/CS22-Lean-2023/scripts' >> ${HOME}/.bashrc
+export PATH=${PATH}:/workspace/CS22-Lean-2023/scripts
 
-  
