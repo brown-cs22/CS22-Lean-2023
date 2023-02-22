@@ -1,23 +1,42 @@
+# Stores id of HEAD commit
 HC=$(git rev-parse HEAD)
-if [[ $(git stash push -m "push-update" -u) == *"No local changes to save"* ]]
-then 
-  git pull 
-  lake exe cache get
-else 
-  git pull 
-  if ! git stash apply stash^{/push-update}
-  then
-    git reset --hard $HC
-    git stash apply stash^{/push-update}
-    git stash drop
-    echo ""
+
+# Just in case user has env variable with this name, very unlikely
+unset -v STASHED
+
+# Stash changes - branch executes iff output did not contain "No local...", i.e. iff a stash was actually made
+if ! [[ $(git stash push -u) == *"No local changes to save"* ]]; then
+    STASHED=
+fi
+
+function handle_merge_conflict () {
+
+    # Reset index and working tree to their original state (before stash)
+    git reset --hard $HC >/dev/null
+
+    if [[ -v STASHED ]] ; then
+        git stash pop >/dev/null
+    fi
+
+    echo 
     echo "We cannot get the latest changes to the class materials, because you have local changes that conflict with them."
     echo "The conflicting files should be visible in the trace message above, after the word CONFLICT."
-    echo "To erase your local changes, run the command `reset-all`."
+    echo 'To erase your local changes, run the command `reset-all`.'  # uses single quotes to avoid backtick tomfoolery
     echo "(Warning: this cannot be undone.)"
     echo "Remember that you should only be modifying files in your personal working directories."
-  else 
-    git stash drop
-    lake exe cache get
-  fi
+    exit 1
+}
+
+# See if automatic merge of upstream commits fails
+# Since we stashed, failure means the student is using git on their own and committed changes to class files
+if ! git pull --no-rebase; then
+    handle_merge_conflict
 fi
+
+# Pull was successful, attempt to pop from stash if necessary
+if [[ -v STASHED ]] && ! git stash pop; then
+    handle_merge_conflict
+fi
+
+# lean magic (I don't get this tbh)
+lake exe cache get
