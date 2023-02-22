@@ -48,10 +48,14 @@ you can click on the original link to get a new copy of the course workspace.
 ## Directions for Setting up Logging
 
 1. Click on Extensions (or `Ctrl + Shift + X`) in the VSCode interface.
-![image](https://user-images.githubusercontent.com/6439400/220396175-d7f1667a-9fbd-41de-ab15-09778508e34c.png)
+
+<img width="315" alt="Click on Extensions" src="https://user-images.githubusercontent.com/6439400/220775163-d26b0b3e-e1a5-46fa-b67b-c5af3750a53c.png">
+
 
 2. Click the `...` and select `Install from VSIX`.
-![image](https://user-images.githubusercontent.com/6439400/220396492-63067827-61f8-45f1-bfa0-567fdc2d7ee6.png)
+
+<img width="270" alt="Select Elipsis" src="https://user-images.githubusercontent.com/6439400/220775206-99b45dca-e766-4094-accf-700e63cca3a4.png">
+
 
 3. Enter the following path and hit `OK` : `/workspace/CS22-Lean-2023/save-to-firestore-0.13.1.vsix`
 
