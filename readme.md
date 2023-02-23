@@ -45,6 +45,30 @@ If at any point your workspace becomes unusable
 and you think you need a fresh start,
 you can click on the original link to get a new copy of the course workspace.
 
+## Directions for Setting up Logging
+
+1. Click on Extensions (or `Ctrl + Shift + X`) in the VSCode interface.
+
+<img width="315" alt="Click on Extensions" src="https://user-images.githubusercontent.com/6439400/220775163-d26b0b3e-e1a5-46fa-b67b-c5af3750a53c.png">
+
+
+2. Click the `...` and select `Install from VSIX`.
+
+<img width="270" alt="Select Ellipsis" src="https://user-images.githubusercontent.com/6439400/220775206-99b45dca-e766-4094-accf-700e63cca3a4.png">
+
+
+3. Enter the following path and hit `OK` : `/workspace/CS22-Lean-2023/save-to-firestore-0.13.1.vsix`
+
+4. If prompted, restart VSCode.
+
+Enabling logging is an optional feature that can greatly benefit our understanding of students' issues with assignments, leading to improvements for future students. This logging is completely anonymous, and is carried out only when a file is *saved*. The information logged is:
+
+ - The version of Lean being used
+ - The name and contents of the file being worked on.
+ - An anonymous user-id, which is persistent, but not related to the users' identity.
+ - The timestamp at which the log was generated.
+
+
 ## Directions for updating 
 
 We will push more lecture demos and homework assignments to this project throughout the semester.
