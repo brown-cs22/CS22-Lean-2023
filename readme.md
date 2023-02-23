@@ -54,7 +54,7 @@ you can click on the original link to get a new copy of the course workspace.
 
 2. Click the `...` and select `Install from VSIX`.
 
-<img width="270" alt="Select Elipsis" src="https://user-images.githubusercontent.com/6439400/220775206-99b45dca-e766-4094-accf-700e63cca3a4.png">
+<img width="270" alt="Select Ellipsis" src="https://user-images.githubusercontent.com/6439400/220775206-99b45dca-e766-4094-accf-700e63cca3a4.png">
 
 
 3. Enter the following path and hit `OK` : `/workspace/CS22-Lean-2023/save-to-firestore-0.13.1.vsix`
