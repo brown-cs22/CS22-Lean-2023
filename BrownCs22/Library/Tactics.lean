@@ -56,3 +56,5 @@ elab (name := numbers) "numbers" loc:(location ?) : tactic =>
 end 
 
 macro "set_simplify" : tactic => `(tactic | simp only [Set.mem_union, Set.mem_compl_iff, Set.mem_inter_iff, Set.mem_diff] at *)
+
+macro "linarith" : tactic => `(tactic| first | ring1 | linarith)
