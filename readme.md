@@ -64,9 +64,9 @@ you can click on the original link to get a new copy of the course workspace.
 Enabling logging is an optional feature that can greatly benefit our understanding of students' issues with assignments, leading to improvements for future students. This logging is completely anonymous, and is carried out only when a file is *saved*. The information logged is:
 
  - The version of Lean being used
- - The name and contents of the file being worked on, and the timestamp at which the log was generated.
+ - The name and contents of the file being worked on.
  - An anonymous user-id, which is persistent, but not related to the users' identity.
- - The time at which the log was generated
+ - The timestamp at which the log was generated.
 
 
 ## Directions for updating 
