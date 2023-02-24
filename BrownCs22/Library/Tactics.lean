@@ -58,3 +58,23 @@ end
 macro "set_simplify" : tactic => `(tactic | simp only [Set.mem_union, Set.mem_compl_iff, Set.mem_inter_iff, Set.mem_diff] at *)
 
 macro "linarith" : tactic => `(tactic| first | ring1 | linarith)
+
+@[elab_as_elim]
+lemma Nat.induction {P : ℕ → Prop} : P 0 → (∀ n, P n → P (n+1)) → (∀ n, P n) := 
+  Nat.rec
+
+macro "basic_induction" : tactic => 
+  `(tactic| apply Nat.induction)
+
+macro "strong_induction" : tactic => 
+  `(tactic| (intro n; refine Nat.strong_induction_on n ?_; clear n))
+
+
+macro "induction_from_starting_point" : tactic => 
+  `(tactic| apply Nat.le_induction)
+
+
+macro "strong_induction" : tactic => 
+  `(tactic| (intro n; refine Nat.strong_induction_on n ?_; clear n))
+
+
