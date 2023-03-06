@@ -21,6 +21,16 @@ lemma Set.inter_union_cancel_left {α : Type u} {s t : Set α} :
 lemma Set.inter_union_cancel_right {α : Type u} {s t : Set α} : 
   (s ∩ t) ∪ t = t := by simp
 
+namespace Int
+
+-- def ModEq (n a b : ℤ) : Prop := n ∣ a - b
+
+
+
+
+-- notation:50 a " ≡ " b " [ZMOD " n "]" => Int.ModEq n a b
+
+end Int
 
 end BrownCs22
 

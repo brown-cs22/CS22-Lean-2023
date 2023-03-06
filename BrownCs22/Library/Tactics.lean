@@ -6,6 +6,7 @@ import Mathlib.Tactic.Existsi
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Polyrith 
 
 open Lean hiding Rat mkRat
 open Meta Elab Tactic Lean.Parser.Tactic

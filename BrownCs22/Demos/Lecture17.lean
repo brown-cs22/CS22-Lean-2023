@@ -1,20 +1,22 @@
 import Mathlib.Data.Nat.Basic 
-import Mathlib.Tactic.Polyrith
-import Mathlib.Tactic.LibrarySearch
 import BrownCs22.Library.Tactics
+import BrownCs22.Library.ModSubst.ModRel
 import BrownCs22.Library.Defs
 
 set_option linter.unusedVariables false
 
 open BrownCs22
 
-
 /-
+
+# Lecture 17 Lean notes
 
 We've been using Lean (on and off) in homeworks. 
 The plan for today is to get a bit more context about *why* 
 people are interested in tools like this.
 
+
+## GCD in Lean
 
 First of all: we've mentioned before that Lean is in fact 
 a programming language itself. Here's the `gcd` function 
@@ -123,7 +125,8 @@ theorem gcd_divides : ∀ a b : ℕ, gcd a b ∣ a ∧ gcd a b ∣ b := by
         -- We can then compute a witness for divisibility...
         existsi (b/a)*m + k 
 
-        -- and do a (slightly ugly) calculation, with the help of polyrith        
+        -- and do a (slightly ugly) calculation, with the help of polyrith.
+        -- (Don't worry about the details here too much.)      
         zify at qr hm hk ⊢ 
         linear_combination hk + (b / a : ℤ) * hm - qr } } }
 
@@ -141,8 +144,112 @@ Imagine if they were formally verified....
 -/
 
 
-def Int.ModEq (n a b : ℤ) : Prop := n ∣ a - b
--- deriving instance Decidable for Int.ModEq
 
-notation:50 a " ≡ " b " [ZMOD " n "]" => Int.ModEq n a b
+open BrownCs22.Int Dvd
+
+/-
+
+## Modular arithmetic in Lean
+
+On Friday we introduced the notion of "equivalence modulo `n`".
+Two integers are equivalent if they are separated by a multiple of `n`.
+
+-/
+
+#check ModEq
+
+#eval 4 ≡ 14 [ZMOD 5]
+#eval 23 ≡ 11 [ZMOD 12]
+#eval 22 ≡ 11 [ZMOD 12]
+
+
+/-
+We can *prove* modular equivalences, using tools we've used before.
+-/
+
+example : 4 ≡ 14 [ZMOD 5] := by 
+  dsimp [ModEq]
+  dsimp [dvd]
+  existsi -2 
+  numbers 
+
+/-
+But if Lean can evaluate facts like this, why can't it prove them automatically?
+-/
+
+example : 4 ≡ 14 [ZMOD 5] := by 
+  decide 
+
+
+/-
+Ultimately, we're not interested so much in a bare calculator.
+We want to prove things about equivalences.
+
+Here's a theorem that says, if `a ≡ b`, we can add equivalent values
+to each side. (We used this in Friday's lecture...)
+-/
+
+theorem Int.ModEq.add {n a b c d : ℤ} 
+  (h1 : a ≡ b [ZMOD n]) (h2 : c ≡ d [ZMOD n]) :
+    a + c ≡ b + d [ZMOD n] := by
+  dsimp [ModEq, dvd] at *
+  eliminate h1 with x hx 
+  eliminate h2 with y hy
+  existsi x + y
+  calc
+    a + c - (b + d) = a - b + (c - d) := by linarith
+                  _ = n * x + n * y   := by rw [hx, hy]
+                  _ = n * (x + y)     := by linarith
+
+
+
+/-
+We ended the day on Friday thinking about *division*.
+If I know `a ≡ b`, do I know `a/c ≡ b/c`? 
+Certainly not if `c` doesn't divide `a` or `b`. 
+But what if it does? Could we prove this theorem?
+-/
+
+example {a b c n : ℤ} 
+  (hca : c ∣ a) (hcb : c ∣ b) (hab : a ≡ b [ZMOD n]) : 
+    a/c ≡ b/c [ZMOD n] := by
+sorry
+
+
+
+
+
+
+
+
+/-
+After some thought and experimentation: *no!*
+Let `a = 10`, `b = 22`, `c = 2`, `n = 4`.
+-/
+
+example : 2 ∣ 10               := by decide 
+example : 2 ∣ 22               := by decide 
+example : 10 ≡ 22 [ZMOD 4]     := by decide 
+example : 10/2 ≡ 22/2 [ZMOD 4] := by sorry
+
+#eval 10/2 ≡ 22/2 [ZMOD 4]
+
+
+
+
+/-
+
+So, we can't necessarily "cancel" across both sides of a modular equivalence.
+But we can simplify addition, multiplication, exponents, ...
+
+-/
+
+
+example (a b : ℤ) (ha : a ≡ 4 [ZMOD 5]) (hb : b ≡ 3 [ZMOD 5]) :
+    a * b + b ^ 3 + 3 ≡ 2 [ZMOD 5] :=
+  calc
+    a * b + b ^ 3 + 3 ≡ 4 * b + b ^ 3 + 3 [ZMOD 5] := by mod_subst [ha]
+                    _ ≡ 4 * 3 + 3 ^ 3 + 3 [ZMOD 5] := by mod_subst [hb]
+                    _ = 2 + 5 * 8                  := by numbers
+                    _ ≡ 2 [ZMOD 5]                 := by decide
 
