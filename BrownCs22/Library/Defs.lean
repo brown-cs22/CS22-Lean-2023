@@ -7,6 +7,11 @@ namespace Nat
 def isOdd (n : ℕ) : Prop := 
   ∃ k : ℕ, n = 2 * k + 1
 
+lemma quotient_remainder {a b c : ℕ} (h : a % b = c) : ∃ q, a = q*b + c := by 
+  use a/b
+  rw [← h, mul_comm, Nat.div_add_mod]
+
+
 end Nat
 
 
