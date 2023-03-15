@@ -32,5 +32,8 @@ namespace Int
 
 end Int
 
+def totient (n : ℕ) : ℕ := ((List.range n).filter n.coprime).length
+
+
 end BrownCs22
 
