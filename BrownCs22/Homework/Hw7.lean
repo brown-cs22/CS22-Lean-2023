@@ -283,7 +283,7 @@ Try putting your cursor after the #check statements to see what each theorem doe
 -- Hint: you may need the `case` tactic - 
 
 /- 2 points -/
-lemma helper (a b c d : ℕ) :
+lemma problem_1 (a b c d : ℕ) :
   a ≤ b →
   c < d → 
   a + c < b + d := by
@@ -293,10 +293,10 @@ lemma helper (a b c d : ℕ) :
 #check Nat.mul_le_mul
 #check Nat.le_of_lt
 
--- Hint: use `helper`, `Nat.mul_le_mul`, and `Nat.le_of_lt`
+-- Hint: use `problem_1`, `Nat.mul_le_mul`, and `Nat.le_of_lt`
 
 /- 2 points -/
-example (a b c d e f : ℕ) :
+lemma problem_2 (a b c d e f : ℕ) :
   a < b → 
   c < d → 
   e < f → 
@@ -481,6 +481,13 @@ lemma odd_before_even : ∀ (n : ℕ), MyEven (n+1) → MyOdd n := by
 # Problem 4
 
 You may find `apply` to be very useful here!
+
+Hint: at some point in `not_both`, you might have a negation hypothesis
+`hn : ¬ P` and a goal of `False`. 
+Remember that we can prove `False` using the `contradiction` tactic 
+if we have hypotheses `hn : ¬ P` and `h : P`. 
+So a good move here would be `have h : P`! 
+Then you'll need to go ahead and prove `P`.
 
 -/
 
