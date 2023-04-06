@@ -60,7 +60,9 @@ Then think about the last few homeworks; how do you prove an `↔` goal?
 
 /- 4 points -/
 theorem problem_1 : (A ∩ B) ∪ A = A := by 
-  sorry
+  ext x
+  rewrite [inter_union_cancel_left]
+  reflexivity
 
 
 /-
