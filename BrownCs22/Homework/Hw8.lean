@@ -461,7 +461,7 @@ Hint: you may find the theorems below quite useful.
 #check congr_arg₂
 #check Nat.sub_add_eq
 
-/- _ points -/
+/- 0 points -/
 theorem alt_binomial_symmetry :
   ∀ n k, k ≤ n → (n A k) = (n A n-k) := by
   sorry
