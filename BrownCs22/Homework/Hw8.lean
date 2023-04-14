@@ -286,12 +286,13 @@ you can call `simp` like this: `simp at h`.
 -- proofs of `n ≠ 0` and `k ≠ 0` in your context.
 
 /- 2 points -/
-@[simp] lemma Choose_self_eq_one (n : ℕ) :
+lemma Choose_self_eq_one (n : ℕ) :
   (n C n) = 1 := by
   sorry
 
 
 
+attribute [simp] Choose_self_eq_one
 
 -- You don't have to do this one on your own -- we're going to talk through it
 -- together in lecture on Friday, April 14!
@@ -401,9 +402,12 @@ notation:max "(" n " A " k ")" => AltChoose n k
 @[simp] lemma AltChoose_zero_eq_one : ∀ n, (n A 0) = 1 := by simp [AltChoose]
   
 /- 2 points -/
-@[simp] lemma AltChoose_one_eq_self :
+lemma AltChoose_one_eq_self :
   ∀ n, (n A 1) = n := by
   sorry
+
+
+attribute [simp] AltChoose_one_eq_self
 
 -- In this problem, you might find the following lemma useful again:
 #check exists_succ_of_gt
@@ -416,8 +420,9 @@ We're doing induction on `n`, with the predicate `∀ k, n < k → (n A k) = 0`.
 Take a look at what our induction hypothesis `ih` looks like in the inductive step.
 
 -/
+
 /- 2 points -/
-@[simp] lemma AltChoose_zero_of_k_gt_n :
+lemma AltChoose_zero_of_k_gt_n :
   ∀ n k, n < k → (n A k) = 0 := by
   basic_induction
   {
@@ -429,11 +434,23 @@ Take a look at what our induction hypothesis `ih` looks like in the inductive st
     sorry
   }
 
+
+
+attribute [simp] AltChoose_zero_of_k_gt_n
+
+
+
+
+
 /- 2 points -/
-@[simp] lemma AltChoose_self_eq_one :
+lemma AltChoose_self_eq_one :
   ∀ n, (n A n) = 1 := by
   sorry
 
+
+
+
+attribute [simp] AltChoose_self_eq_one
 
 /-
 
